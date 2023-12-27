@@ -27,6 +27,10 @@ public interface ArticleDao {
             """)
     public void modifyArticle(Article article);
 
-    @Delete("DELETE FROM article WHERE id = #{articleId}")
-    public void deleteArticle(int articleId);
+
+    @Delete("DELETE FROM article WHERE id = #{id}")
+    void deleteArticle(int id);
+
+    @Update("UPDATE article SET title = #{title}, body = #{body} WHERE id = #{id}")
+    void updateArticle(Article article);
 }
