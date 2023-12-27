@@ -1,0 +1,199 @@
+DROP DATABASE IF EXISTS Blackout;
+CREATE DATABASE Blackout;
+USE Blackout;
+
+CREATE TABLE article(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    boardId INT UNSIGNED NOT NULL,
+    title VARCHAR(100) NOT NULL,
+    img VARCHAR(100),
+    `body` TEXT NOT NULL
+);
+
+ALTER TABLE article ADD COLUMN hitCount INT UNSIGNED NOT NULL DEFAULT 0;
+
+CREATE TABLE `member`(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    loginId VARCHAR(20) NOT NULL,
+    loginPw VARCHAR(100) NOT NULL,
+    alcoholLevel SMALLINT UNSIGNED NOT NULL DEFAULT 1 COMMENT '알콜 레벨 (가입자 = 1, 알쓰 = 2, 알잘알 = 3, 주당 = 4)',
+    `name` VARCHAR(20) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    delStatus TINYINT UNSIGNED NOT NULL DEFAULT 0 COMMENT '탈퇴 여부 (탈퇴 전 = 0, 탈퇴 후 = 1)',
+    delDate DATETIME COMMENT '탈퇴 날짜'
+);
+
+CREATE TABLE board(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `code` VARCHAR(20) NOT NULL COMMENT 'map(맛집), alcohol(술), food(안주) ...',
+    `name` VARCHAR(20) NOT NULL COMMENT '게시판 이름'
+);
+
+CREATE TABLE recommendPoint(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL COMMENT '관련 데이터 타입 코드',
+    relId INT UNSIGNED NOT NULL COMMENT '관련 데이터 번호',
+    `point` INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE reply(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
+    relTypeCode VARCHAR(20) NOT NULL,
+    relId INT UNSIGNED NOT NULL,
+    `body` TEXT NOT NULL
+);
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+boardId = 1,
+title = '맛집1',
+`body` = '내용1';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 2,
+title = '제목2',
+`body` = '내용2';
+
+INSERT INTO article
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+boardId = 2,
+title = '제목3',
+`body` = '내용3';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'ddd',
+loginPw = 'ddd',
+alcoholLevel = 3,
+`name` = '연지',
+email = 'admin@admin.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'drink',
+loginPw = 'drink',
+alcoholLevel = 4,
+`name` = '한잔해',
+email = 'beer@admin.com';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'test',
+loginPw = 'test',
+alcoholLevel = 2,
+`name` = '나잘래',
+email = 'adminee@admin.com';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'food',
+`name` = '쪽갈비 먹을거야';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'map',
+`name` = '암냠냠';
+
+# 2번 회원이 1번 글에 좋아요
+INSERT INTO recommendPoint
+SET memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`point` = 1;
+
+# 2번 회원이 3번 글에 좋아요
+INSERT INTO recommendPoint
+SET memberId = 2,
+relTypeCode = 'article',
+relId = 3,
+`point` = 1;
+
+# 3번 회원이 2번 글에 좋아요
+INSERT INTO recommendPoint
+SET memberId = 3,
+relTypeCode = 'article',
+relId = 2,
+`point` = 1;
+
+# 3번 회원이 1번 글에 좋아요
+INSERT INTO recommendPoint
+SET memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`point` = 1;
+
+# 2번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 1,
+`body` = '댓글1';
+
+# 3번 회원이 1번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 1,
+`body` = '댓글2';
+
+# 2번 회원이 3번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 3,
+`body` = '댓글3';
+
+# 3번 회원이 2번 글에 댓글
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 2,
+`body` = '댓글4';
+
+SELECT * FROM article;
+SELECT * FROM `member`;
+SELECT * FROM board;
+SELECT * FROM recommendPoint;
+SELECT * FROM reply;
+
+SELECT LAST_INSERT_ID();
+
+/*
+insert into article
+(
+    regDate, updateDate, memberId, boardId, title, `body`
+)
+select now(), now(), FLOOR(RAND() * 2) + 1, FLOOR(RAND() * 2) + 1, concat('제목_', FLOOR(RAND() * 10000)), CONCAT('내용_', FLOOR(RAND() * 10000))
+from article;
+*/
