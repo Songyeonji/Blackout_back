@@ -14,5 +14,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         registry.addMapping("/usr/article/**")
                 .allowedOrigins("http://localhost:3000")
                 .allowedMethods("GET", "POST", "PUT", "DELETE");
+        
+        registry.addMapping("/usr/member/**")
+        .allowedOrigins("http://localhost:3000")
+        .allowedMethods("GET", "POST", "PUT", "DELETE");
     }
 }
