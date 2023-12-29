@@ -11,7 +11,13 @@ public class MemberService {
     public MemberService(MemberDao memberDao) {
         this.memberDao = memberDao;
     }
+    
 
+    public void joinMember(Member member) {
+        // 비밀번호 해싱 없이 바로 저장
+        memberDao.insertMember(member);
+    }
+    
     public Member getMemberByLoginId(String loginId) {
         return memberDao.getMemberByLoginId(loginId);
     }
