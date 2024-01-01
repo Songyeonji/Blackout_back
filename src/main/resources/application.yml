@@ -6,5 +6,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/Blackout?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
     username: root
     password: 
+    mvc:
+      static-path-pattern: /images/**
+    resources:
+      static-locations: file:/path/to/image/directory/
 mybatis:
   type-aliases-package: com.example.blackout.test.vo

@@ -3,6 +3,7 @@ package com.example.blackout.test.dao;
 import java.util.List;
 import org.apache.ibatis.annotations.*;
 import com.example.blackout.test.vo.Article;
+import com.example.blackout.test.vo.Member;
 
 @Mapper
 public interface ArticleDao {
@@ -31,6 +32,13 @@ public interface ArticleDao {
     @Delete("DELETE FROM article WHERE id = #{id}")
     void deleteArticle(int id);
 
-    @Update("UPDATE article SET title = #{title}, body = #{body} WHERE id = #{id}")
+    @Select("SELECT * FROM member WHERE id = #{id}")
+    Member getMemberById(int id);
+    
+    @Update("""
+            UPDATE article
+            SET title = #{title}, body = #{body}, boardId = #{boardId}, updateDate = NOW()
+            WHERE id = #{id}
+            """)
     void updateArticle(Article article);
 }

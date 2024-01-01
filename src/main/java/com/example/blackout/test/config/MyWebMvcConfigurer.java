@@ -17,6 +17,10 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
         
         registry.addMapping("/usr/member/**")
         .allowedOrigins("http://localhost:3000")
-        .allowedMethods("GET", "POST", "PUT", "DELETE");
+        .allowCredentials(true)
+        .allowedMethods("GET", "POST", "PUT", "DELETE")
+        .maxAge(3600);
+        
     }
+    
 }

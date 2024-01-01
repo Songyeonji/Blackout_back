@@ -18,6 +18,11 @@ public class MemberService {
         memberDao.insertMember(member);
     }
     
+    public boolean isLoginIdAvailable(String loginId) {
+        return memberDao.countByLoginId(loginId) == 0;
+    }
+
+    
     public Member getMemberByLoginId(String loginId) {
         return memberDao.getMemberByLoginId(loginId);
     }
@@ -25,5 +30,12 @@ public class MemberService {
     public boolean validateMemberCredentials(String loginId, String loginPw) {
         Member member = memberDao.getMemberByLoginId(loginId);
         return member != null && member.getLoginPw().equals(loginPw);
+    }
+    public void modifyMember(Member member) {
+        memberDao.updateMember(member);
+    }
+
+    public Member getMemberById(int id) {
+        return memberDao.getMemberById(id);
     }
 }

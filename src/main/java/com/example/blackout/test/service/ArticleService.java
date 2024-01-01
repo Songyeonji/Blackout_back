@@ -32,10 +32,10 @@ public class ArticleService {
     public void deleteArticle(int id) {
         articleDao.deleteArticle(id);
     }
-
+    
     public void updateArticle(int id, Article article) {
+        article.setId(id); // ID를 설정합니다.
         articleDao.updateArticle(article);
     }
-
     
 }
