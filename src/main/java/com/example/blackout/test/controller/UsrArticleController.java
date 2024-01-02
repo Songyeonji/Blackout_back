@@ -97,5 +97,12 @@ public class UsrArticleController {
         
         return fileName;
     }
+    
+    @GetMapping("/top-recommended")
+    @ResponseBody
+    public ResponseEntity<List<Article>> getTopRecommendedArticles() {
+        List<Article> articles = articleService.getTopRecommendedArticles();
+        return ResponseEntity.ok(articles);
+    }
 }
 

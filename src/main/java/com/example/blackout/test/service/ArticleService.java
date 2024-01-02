@@ -48,6 +48,9 @@ public class ArticleService {
         article.setId(id); // ID를 설정합니다.
         articleDao.updateArticle(article);
     }
+    public List<Article> getTopRecommendedArticles() {
+        return articleDao.getTopRecommendedArticles();
+    }
     
     
 }

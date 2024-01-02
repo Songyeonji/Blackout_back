@@ -19,6 +19,8 @@ public class Article {
     private int memberId; // memberId 필드 추가
     private Date regDate; // 작성일
     private Date updateDate; // 최종 수정일
+    private int hitCount;
+	private int point;
 	public void setRecommendPointUsers(List<Integer> recommendPointUsers) {
 		// TODO Auto-generated method stub
 		

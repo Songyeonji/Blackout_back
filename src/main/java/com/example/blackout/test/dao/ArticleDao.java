@@ -41,4 +41,14 @@ public interface ArticleDao {
             WHERE id = #{id}
             """)
     void updateArticle(Article article);
+    
+    @Select("""
+            SELECT A.*, COUNT(R.memberId) as recommendCount
+            FROM article A
+            LEFT JOIN recommendPoint R ON A.id = R.relId AND R.relTypeCode = 'article'
+            GROUP BY A.id
+            ORDER BY recommendCount DESC
+            LIMIT 5
+            """)
+    List<Article> getTopRecommendedArticles();
 }
