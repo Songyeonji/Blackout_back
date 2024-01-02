@@ -22,6 +22,18 @@ public class UsrMemberController {
         this.memberService = memberService;
     }
 
+    @PostMapping("/doLogin")
+    public ResponseEntity<?> doLogin(@RequestBody Member member, HttpSession session) {
+        boolean isLoginSuccess = memberService.validateMemberCredentials(member.getLoginId(), member.getLoginPw());
+        if (isLoginSuccess) {
+            Member loggedInMember = memberService.getMemberByLoginId(member.getLoginId());
+            session.setAttribute("memberId", loggedInMember.getId());
+            return ResponseEntity.ok(loggedInMember);
+        } else {
+            return ResponseEntity.status(401).body("Login failed");
+        }
+    }
+
     @PostMapping("/doJoin")
     public ResponseEntity<Member> doJoin(@RequestBody Member member) {
         memberService.joinMember(member);
@@ -35,17 +47,7 @@ public class UsrMemberController {
         return ResponseEntity.ok(isAvailable);
     }
 
-    @PostMapping("/doLogin")
-    public ResponseEntity<?> doLogin(@RequestBody Member member, HttpSession session) {
-        boolean isLoginSuccess = memberService.validateMemberCredentials(member.getLoginId(), member.getLoginPw());
-        if (isLoginSuccess) {
-            Member loggedInMember = memberService.getMemberByLoginId(member.getLoginId());
-            session.setAttribute("memberId", loggedInMember.getId());
-            return ResponseEntity.ok(loggedInMember);
-        } else {
-            return ResponseEntity.status(401).body("Login failed");
-        }
-    }
+
 
     // 로그아웃 처리
     @GetMapping("/doLogout")

@@ -15,8 +15,8 @@ public interface ArticleDao {
 	@Options(useGeneratedKeys=true, keyProperty="id")
 	public int writeArticle(Article article);
 
-    @Select("SELECT * FROM article")
-    public List<Article> getArticles();
+	 @Select("SELECT * FROM article")
+	    List<Article> getArticles();
 
     @Select("SELECT * FROM article WHERE id = #{id}")
     public Article getArticleById(int id);
