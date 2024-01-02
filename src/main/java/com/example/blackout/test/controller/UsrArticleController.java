@@ -47,7 +47,7 @@ public class UsrArticleController {
             return ResponseEntity.notFound().build();
         }
     }
-
+    
     @PostMapping("/doWrite")
     public ResponseEntity<Article> doWrite(@RequestBody Article article) {
         Article savedArticle = articleService.writeArticle(article);

@@ -8,12 +8,12 @@ import com.example.blackout.test.vo.Member;
 @Mapper
 public interface ArticleDao {
 
-    @Insert("""
-            INSERT INTO article (title, body, boardId, memberId, regDate, updateDate)
-            VALUES (#{title}, #{body}, #{boardId}, #{memberId}, NOW(), NOW())
-            """)
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    public int writeArticle(Article article);
+	@Insert("""
+	        INSERT INTO article (title, body, boardId, memberId, regDate, updateDate)
+	        VALUES (#{title}, #{body}, #{boardId}, #{memberId}, NOW(), NOW())
+	        """)
+	@Options(useGeneratedKeys=true, keyProperty="id")
+	public int writeArticle(Article article);
 
     @Select("SELECT * FROM article")
     public List<Article> getArticles();
