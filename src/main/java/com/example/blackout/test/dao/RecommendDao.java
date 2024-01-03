@@ -18,4 +18,8 @@ public interface RecommendDao {
 
     @Delete("DELETE FROM recommendPoint WHERE memberId = #{memberId} AND relTypeCode = #{relTypeCode} AND relId = #{relId}")
     void deleteRecommendPoint(int memberId, String relTypeCode, int relId);
+   
+    @Select("SELECT COUNT(*) FROM recommendPoint WHERE relTypeCode = 'article' AND relId = #{articleId}")
+    int getRecommendCountByArticleId(int articleId);
 }
+

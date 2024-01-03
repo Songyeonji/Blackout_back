@@ -51,4 +51,15 @@ public interface ArticleDao {
             LIMIT 5
             """)
     List<Article> getTopRecommendedArticles();
+    @Select("SELECT a.*, " +
+            "(SELECT COUNT(*) FROM recommendPoint WHERE relTypeCode = 'article' AND relId = a.id) AS recommendCount " +
+            "FROM article a")
+    List<Article> getArticlesWithRecommendCount();
+    
+    @Update("UPDATE article SET recommendCount = recommendCount + 1 WHERE id = #{id}")
+    void increaseRecommendCount(int id);
+
+    @Update("UPDATE article SET recommendCount = recommendCount - 1 WHERE id = #{id}")
+    void decreaseRecommendCount(int id);
+    
 }

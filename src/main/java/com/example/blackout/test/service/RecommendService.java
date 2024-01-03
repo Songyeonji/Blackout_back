@@ -19,5 +19,6 @@ public class RecommendService {
             recommendDao.insertRecommendPoint(memberId, relTypeCode, relId);
         }
     }
+
 }
 

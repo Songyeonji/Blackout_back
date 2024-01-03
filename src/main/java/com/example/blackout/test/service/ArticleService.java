@@ -51,6 +51,14 @@ public class ArticleService {
     public List<Article> getTopRecommendedArticles() {
         return articleDao.getTopRecommendedArticles();
     }
+    public List<Article> getArticlesWithRecommendCount() {
+        List<Article> articles = articleDao.getArticlesWithRecommendCount();
+        articles.forEach(article -> {
+            int recommendCount = recommendDao.getRecommendCountByArticleId(article.getId());
+            article.setRecommendCount(recommendCount);
+        });
+        return articles;
+    }
     
     
 }
