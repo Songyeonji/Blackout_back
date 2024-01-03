@@ -19,13 +19,17 @@ public class Article {
     private Date regDate; // 작성일
     private Date updateDate; // 최종 수정일
     private int hitCount;
-    private int recommendCount;
     private int point;
     private List<Integer> recommendPointUsers; // 추천한 사용자 ID 목록
 
     public void setRecommendPointUsers(List<Integer> recommendPointUsers) {
         this.recommendPointUsers = recommendPointUsers;
     }
+
+	public void setRecommendCount(int hitCount2) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 

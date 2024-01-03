@@ -31,12 +31,6 @@ public class UsrArticleController {
         this.articleService = articleService;
     }
 
-    @GetMapping("/showList")
-    @ResponseBody
-    public List<Article> showList() {
-        return articleService.getArticles();
-    }
-
     @GetMapping("/getArticle")
     @ResponseBody
     public ResponseEntity<Article> getArticle(@RequestParam("id") int id) {
@@ -103,6 +97,14 @@ public class UsrArticleController {
     public ResponseEntity<List<Article>> getTopRecommendedArticles() {
         List<Article> articles = articleService.getTopRecommendedArticles();
         return ResponseEntity.ok(articles);
+    }
+    
+    @GetMapping("/showListWithRecommendCount")
+    @ResponseBody
+    public ResponseEntity<List<Article>> showListWithRecommendCount() {
+        List<Article> articles = articleService.getArticlesWithRecommendCount();
+        return ResponseEntity.ok(articles);
+        
     }
 }
 
